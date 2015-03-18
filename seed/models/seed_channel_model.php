@@ -322,7 +322,12 @@ class Seed_channel_model extends Seed_model {
 		for( $i = 0; $i < $seed['seed_count']; $i++ )
 		{
 			foreach( $seed['channel_options'] as $option_name => $option_value )
-			{	
+			{
+				// randomize the entry date for each entry generated
+				$timestamp = ee()->localize->now;
+				$timestamp = $timestamp - (rand(0,86400)*30);
+				$data['entry_date'] = $timestamp;
+
 				$value = ee()->seed_options->$option_name->generate( $option_value );
 
 				if( $value !== FALSE ) $data[ $option_name ] = $value;
